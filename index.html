@@ -1,0 +1,43 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная клиент страница</title>
+</head>
+<body>
+    <h4>Авторизация</h4>
+    <input type="text" id="login">
+    <input type="text" id="password">
+    <input type="button" value="Отправить запрос" onclick="login()">
+
+    <h4>Регистрация</h4>
+    <input type="text" id="loginReg">
+    <input type="text" id="passwordReg">
+    <input type="button" value="Регистрация" onclick="reg()">
+
+    <!-- Подключение модуля socket.io к клиенту -->
+    <script src="socket.io/socket.io.js"></script>
+    <!-- Подключение клиентского скрипта -->
+     <script>
+        // Вызов  модуля socket.io на клиенте
+        const socket = io()
+        //функция сбора данных для для авторизации
+        function login(){
+            let логин_с_клиента = document.getElementById("login").value
+            let пароль_с_клиента = document.getElementById("password").value
+            // Отправка данных на сервер для авторизации
+            socket.emit("авторизация", логин_с_клиента, пароль_с_клиента)
+        }
+        //сокет для переадресации
+        socket.on("переадресация", () => {
+            document.location.href = "/subIndex"
+        })
+        //функция сбора данных для для регистрации
+        function reg(){
+            let логин = document.getElementById("loginReg").value
+            let пароль = document.getElementById("passwordReg").value
+            // Отправка данных на сервер для регистрации
+            socket.emit("регистрация", логин, пароль)
+        }
+     </script>
+</body>
+</html>

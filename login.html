@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+</head>
+<body>
+    <h4>Авторизация</h4>
+    <input type="text" id="login" placeholder="Логин">
+    <input type="password" id="password" placeholder="Пароль">
+    <input type="button" value="Войти" onclick="login()">
+
+    <h4>Нет аккаунта? <a href="/register">Зарегистрируйтесь</a></h4>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        function login() {
+            const логин = document.getElementById("login").value;
+            const пароль = document.getElementById("password").value;
+            socket.emit("авторизация", логин, пароль);
+        }
+
+        socket.on("переадресация", () => {
+            document.location.href = "/dashboard";
+        });
+    </script>
+</body>
+</html>
